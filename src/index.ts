@@ -1,18 +1,12 @@
 import TestRail from 'testrail-api';
-import stripAnsi from 'strip-ansi';
 import type {Reporter} from '@jest/reporters';
-import type {TestResult} from '@jest/types';
+import {getCaseIdFromTestTitle, getTestRunsResults} from './helpers';
 
 const testrail = new TestRail({
   host: process.env.TESTRAIL_HOST,
   user: process.env.TESTRAIL_EMAIL,
   password: process.env.TESTRAIL_PASSWORD
 });
-
-const STATUS_IDS = {
-  FAIL: 5,
-  PASSED: 1
-};
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -48,18 +42,4 @@ async function addTestRun(caseIds: number[]): Promise<number> {
   });
 
   return run.id;
-}
-
-function getTestRunsResults(
-  testRuns: TestResult.AssertionResult[]
-): {case_id: number; status_id: number; comment?: string}[] {
-  return testRuns.map((test) => ({
-    case_id: getCaseIdFromTestTitle(test.title),
-    status_id: test.status === 'passed' ? STATUS_IDS.PASSED : STATUS_IDS.FAIL,
-    comment: test.status === 'failed' ? stripAnsi(test.failureMessages[0]) : ''
-  }));
-}
-
-function getCaseIdFromTestTitle(testTitle: string): number {
-  return Number(/#C(?<caseId>[\d]*)/.exec(testTitle).groups.caseId);
 }
