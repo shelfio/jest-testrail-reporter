@@ -12,6 +12,16 @@ const testrail = new TestRail({
 // @ts-ignore
 export default class TestRailReporter implements Reporter {
   async onRunComplete(contexts, results) {
+    if (
+      !process.env.TESTRAIL_HOST ||
+      !process.env.TESTRAIL_EMAIL ||
+      !process.env.TESTRAIL_PASSWORD
+    ) {
+      console.log('TestRail Reporter: Skipping since no credentials setup');
+
+      return;
+    }
+
     const testRuns = results.testResults
       .filter((testResult) => !testResult.skipped)
       .map((testResult) => testResult.testResults)
