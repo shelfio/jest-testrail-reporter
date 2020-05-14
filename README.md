@@ -40,7 +40,7 @@ Step 3. Ensure you have environment variables with credentials setup:
 $ git checkout master
 $ yarn version
 $ yarn publish
-$ git push origin master
+$ git push origin master --tags
 ```
 
 ## License
