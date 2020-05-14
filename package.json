@@ -1,7 +1,7 @@
 {
-  "name": "@shelf/xxxxxx",
+  "name": "@shelf/jest-testrail-reporter",
   "version": "0.0.0",
-  "description": "xxxxxx",
+  "description": "jest-testrail-reporter",
   "license": "MIT",
   "author": {
     "name": "Vlad Holubiev",
