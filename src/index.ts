@@ -34,9 +34,11 @@ export default class TestRailReporter implements Reporter {
     try {
       const runId = await addTestRun(allCaseIds);
 
-      await testrail.addResultsForCases(runId, getTestRunsResults(testRuns));
+      const {body: resp} = await testrail.addResultsForCases(runId, getTestRunsResults(testRuns));
+      console.log('TestRail: Added Results for Cases', resp);
 
-      await testrail.closeRun(runId);
+      const {body: respCloseRun} = await testrail.closeRun(runId);
+      console.log('TestRail: Closed Run', respCloseRun);
     } catch (error) {
       console.error(error);
     }
@@ -51,6 +53,7 @@ async function addTestRun(caseIds: number[]): Promise<number> {
     include_all: false,
     name: ''
   });
+  console.log('TestRail: Created Run', run);
 
   return run.id;
 }
