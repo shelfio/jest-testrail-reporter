@@ -33,6 +33,7 @@ Step 3. Ensure you have environment variables with credentials setup:
 - `process.env.TESTRAIL_HOST`
 - `process.env.TESTRAIL_EMAIL`
 - `process.env.TESTRAIL_PASSWORD`
+- `process.env.TESTRAIL_PROJECT_ID`
 
 ## Publish
 

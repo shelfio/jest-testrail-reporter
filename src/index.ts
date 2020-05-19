@@ -46,9 +46,10 @@ export default class TestRailReporter implements Reporter {
 async function addTestRun(caseIds: number[]): Promise<number> {
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
-  const {body: run} = await testrail.addRun(1, {
+  const {body: run} = await testrail.addRun(Number(process.env.TESTRAIL_PROJECT_ID), {
     case_ids: caseIds,
-    include_all: false
+    include_all: false,
+    name: ''
   });
 
   return run.id;
