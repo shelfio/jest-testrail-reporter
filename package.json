@@ -1,6 +1,6 @@
 {
   "name": "@shelf/jest-testrail-reporter",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "jest-testrail-reporter",
   "license": "MIT",
   "author": {
