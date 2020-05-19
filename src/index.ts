@@ -1,6 +1,9 @@
 import TestRail from 'testrail-api';
 import type {Reporter} from '@jest/reporters';
+import debugLib from 'debug';
 import {getCaseIdFromTestTitle, getTestRunsResults} from './helpers';
+
+const debug = debugLib('jest-testrail-reporter');
 
 const testrail = new TestRail({
   host: process.env.TESTRAIL_HOST,
@@ -12,6 +15,8 @@ const testrail = new TestRail({
 // @ts-ignore
 export default class TestRailReporter implements Reporter {
   async onRunComplete(contexts, results) {
+    debug('onRunComplete results.testResults', results.testResults);
+
     if (
       !process.env.TESTRAIL_HOST ||
       !process.env.TESTRAIL_EMAIL ||
@@ -27,18 +32,20 @@ export default class TestRailReporter implements Reporter {
       .map((testResult) => testResult.testResults)
       .flat()
       .filter((test) => test.title.startsWith('#C'));
-    const allCaseIds = testRuns.map(({title}) => {
-      return getCaseIdFromTestTitle(title);
-    });
+    debug('onRunComplete testRuns', testRuns);
+
+    const allCaseIds = testRuns.map(({title}) => getCaseIdFromTestTitle(title));
+    debug('onRunComplete allCaseIds', allCaseIds);
 
     try {
       const runId = await addTestRun(allCaseIds);
+      debug('onRunComplete runId', runId);
 
       const {body: resp} = await testrail.addResultsForCases(runId, getTestRunsResults(testRuns));
-      console.log('TestRail: Added Results for Cases', resp);
+      debug('TestRail: Added Results for Cases', resp);
 
       const {body: respCloseRun} = await testrail.closeRun(runId);
-      console.log('TestRail: Closed Run', respCloseRun);
+      debug('TestRail: Closed Run', respCloseRun);
     } catch (error) {
       console.error(error);
     }
@@ -53,7 +60,7 @@ async function addTestRun(caseIds: number[]): Promise<number> {
     include_all: false,
     name: ''
   });
-  console.log('TestRail: Created Run', run);
+  debug('TestRail: Created Run', run);
 
   return run.id;
 }
