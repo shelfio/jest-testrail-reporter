@@ -5,8 +5,8 @@ import {getCaseIdFromTestTitle, getTestRunsResults} from './helpers';
 
 const debug = debugLib('jest-testrail-reporter');
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 export default class TestRailReporter implements Reporter {
   async onRunComplete(contexts, results) {
     const testrail = new TestRail({
@@ -28,18 +28,25 @@ export default class TestRailReporter implements Reporter {
     }
 
     const testRuns = results.testResults
-      .filter((testResult) => !testResult.skipped)
-      .map((testResult) => testResult.testResults)
+      .filter(testResult => !testResult.skipped)
+      .map(testResult => testResult.testResults)
       .flat()
-      .filter((test) => test.title.startsWith('#C'));
+      .filter(test => test.title.startsWith('#C'));
     debug('onRunComplete testRuns', testRuns);
 
     const allCaseIds = testRuns.map(({title}) => getCaseIdFromTestTitle(title));
     debug('onRunComplete allCaseIds', allCaseIds);
 
     try {
-      const runId = await addTestRun(allCaseIds);
-      debug('onRunComplete runId', runId);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      const {body: run} = await testrail.addRun(Number(process.env.TESTRAIL_PROJECT_ID), {
+        case_ids: allCaseIds,
+        include_all: false,
+        name: ''
+      });
+      const runId = run.id;
+      debug('TestRail: Created Run', run);
 
       const {body: resp} = await testrail.addResultsForCases(runId, getTestRunsResults(testRuns));
       debug('TestRail: Added Results for Cases', resp);
@@ -50,17 +57,4 @@ export default class TestRailReporter implements Reporter {
       console.error(error);
     }
   }
-}
-
-async function addTestRun(caseIds: number[]): Promise<number> {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const {body: run} = await testrail.addRun(Number(process.env.TESTRAIL_PROJECT_ID), {
-    case_ids: caseIds,
-    include_all: false,
-    name: ''
-  });
-  debug('TestRail: Created Run', run);
-
-  return run.id;
 }
