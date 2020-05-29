@@ -5,16 +5,16 @@ import {getCaseIdFromTestTitle, getTestRunsResults} from './helpers';
 
 const debug = debugLib('jest-testrail-reporter');
 
-const testrail = new TestRail({
-  host: process.env.TESTRAIL_HOST,
-  user: process.env.TESTRAIL_EMAIL,
-  password: process.env.TESTRAIL_PASSWORD
-});
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 export default class TestRailReporter implements Reporter {
   async onRunComplete(contexts, results) {
+    const testrail = new TestRail({
+      host: process.env.TESTRAIL_HOST,
+      user: process.env.TESTRAIL_EMAIL,
+      password: process.env.TESTRAIL_PASSWORD
+    });
+
     debug('onRunComplete results.testResults', results.testResults);
 
     if (
