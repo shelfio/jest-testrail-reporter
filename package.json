@@ -59,10 +59,10 @@
     "@types/jest": "26.0.9",
     "@types/node": "12",
     "babel-jest": "26.2.2",
-    "eslint": "7.2.0",
+    "eslint": "7.7.0",
     "husky": "4.2.5",
     "jest": "26.2.2",
-    "lint-staged": "10.2.9",
+    "lint-staged": "10.2.11",
     "prettier": "2.0.5",
     "typescript": "3.9.7"
   },
