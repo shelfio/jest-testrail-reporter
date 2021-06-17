@@ -16,11 +16,12 @@ describe('getTestRunsResults', () => {
         ancestorTitles: ['foo', 'bar'],
         duration: 1032,
         failureMessages: [],
+        failureDetails: [],
         fullName: 'foo bar #C123 hello world',
         location: null,
         numPassingAsserts: 0,
         status: 'passed',
-        title: '#C123 hello world'
+        title: '#C123 hello world',
       },
 
       {
@@ -40,14 +41,15 @@ describe('getTestRunsResults', () => {
             '\u001b[2m    },\u001b[22m\n' +
             '\u001b[2m  }\u001b[22m\n' +
             '    at Object.<anonymous> (/Users/dummy/code/xxxxx/xxxx/xxxx/yyyyyyy.test.ts:124:19)\n' +
-            '    at processTicksAndRejections (internal/process/task_queues.js:97:5)'
+            '    at processTicksAndRejections (internal/process/task_queues.js:97:5)',
         ],
+        failureDetails: [],
         fullName: 'foo bar #C123 hello world',
         location: null,
         numPassingAsserts: 0,
         status: 'failed',
-        title: '#C123 hello world'
-      }
+        title: '#C123 hello world',
+      },
     ];
 
     expect(getTestRunsResults(testRuns)).toMatchInlineSnapshot(`

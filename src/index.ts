@@ -1,5 +1,5 @@
 import TestRail from 'testrail-api';
-import type {Reporter} from '@jest/reporters';
+import type {AggregatedResult, Context, Reporter} from '@jest/reporters';
 import debugLib from 'debug';
 import {getCaseIdFromTestTitle, getTestRunsResults} from './helpers';
 
@@ -8,11 +8,11 @@ const debug = debugLib('jest-testrail-reporter');
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 export default class TestRailReporter implements Reporter {
-  async onRunComplete(contexts, results) {
+  async onRunComplete(contexts: Set<Context>, results: AggregatedResult): Promise<void> {
     const testrail = new TestRail({
       host: process.env.TESTRAIL_HOST,
       user: process.env.TESTRAIL_EMAIL,
-      password: process.env.TESTRAIL_PASSWORD
+      password: process.env.TESTRAIL_PASSWORD,
     });
 
     debug('onRunComplete results.testResults', results.testResults);
@@ -43,7 +43,7 @@ export default class TestRailReporter implements Reporter {
       const {body: run} = await testrail.addRun(Number(process.env.TESTRAIL_PROJECT_ID), {
         case_ids: allCaseIds,
         include_all: false,
-        name: ''
+        name: '',
       });
       const runId = run.id;
       debug('TestRail: Created Run', run);
