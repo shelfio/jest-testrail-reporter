@@ -16,6 +16,7 @@ describe('getTestRunsResults', () => {
         ancestorTitles: ['foo', 'bar'],
         duration: 1032,
         failureMessages: [],
+        failureDetails: [],
         fullName: 'foo bar #C123 hello world',
         location: null,
         numPassingAsserts: 0,
@@ -42,6 +43,7 @@ describe('getTestRunsResults', () => {
             '    at Object.<anonymous> (/Users/dummy/code/xxxxx/xxxx/xxxx/yyyyyyy.test.ts:124:19)\n' +
             '    at processTicksAndRejections (internal/process/task_queues.js:97:5)',
         ],
+        failureDetails: [],
         fullName: 'foo bar #C123 hello world',
         location: null,
         numPassingAsserts: 0,
