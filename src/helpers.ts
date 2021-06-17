@@ -3,7 +3,7 @@ import stripAnsi from 'strip-ansi';
 
 const STATUS_IDS = {
   FAIL: 5,
-  PASSED: 1
+  PASSED: 1,
 };
 
 export function getCaseIdFromTestTitle(testTitle: string): number {
@@ -15,9 +15,9 @@ export function getCaseIdFromTestTitle(testTitle: string): number {
 export function getTestRunsResults(
   testRuns: TestResult.AssertionResult[]
 ): {case_id: number; status_id: number; comment?: string}[] {
-  return testRuns.map((test) => ({
+  return testRuns.map(test => ({
     case_id: getCaseIdFromTestTitle(test.title),
     status_id: test.status === 'passed' ? STATUS_IDS.PASSED : STATUS_IDS.FAIL,
-    comment: test.status === 'failed' ? stripAnsi(test.failureMessages[0]) : ''
+    comment: test.status === 'failed' ? stripAnsi(test.failureMessages[0]) : '',
   }));
 }

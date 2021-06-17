@@ -12,7 +12,7 @@ export default class TestRailReporter implements Reporter {
     const testrail = new TestRail({
       host: process.env.TESTRAIL_HOST,
       user: process.env.TESTRAIL_EMAIL,
-      password: process.env.TESTRAIL_PASSWORD
+      password: process.env.TESTRAIL_PASSWORD,
     });
 
     debug('onRunComplete results.testResults', results.testResults);
@@ -43,7 +43,7 @@ export default class TestRailReporter implements Reporter {
       const {body: run} = await testrail.addRun(Number(process.env.TESTRAIL_PROJECT_ID), {
         case_ids: allCaseIds,
         include_all: false,
-        name: ''
+        name: '',
       });
       const runId = run.id;
       debug('TestRail: Created Run', run);
