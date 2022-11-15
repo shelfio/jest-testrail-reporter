@@ -7,7 +7,7 @@ const STATUS_IDS = {
 };
 
 export function getCaseIdFromTestTitle(testTitle: string): number {
-  const regexExecResult = /#C(?<caseId>[\d]*)/.exec(testTitle);
+  const regexExecResult = /C(?<caseId>[\d]*)/.exec(testTitle);
 
   return Number(regexExecResult.groups.caseId);
 }

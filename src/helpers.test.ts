@@ -3,7 +3,7 @@ import {getCaseIdFromTestTitle, getTestRunsResults} from './helpers';
 
 describe('getCaseIdFromTestTitle', () => {
   it('should return case id from test title', () => {
-    const testTitle = '#C123 Hello world';
+    const testTitle = 'C123 Hello world';
 
     expect(getCaseIdFromTestTitle(testTitle)).toEqual(123);
   });
@@ -17,7 +17,7 @@ describe('getTestRunsResults', () => {
         duration: 1032,
         failureMessages: [],
         failureDetails: [],
-        fullName: 'foo bar #C123 hello world',
+        fullName: 'foo bar C123 hello world',
         location: null,
         numPassingAsserts: 0,
         status: 'passed',
@@ -44,11 +44,11 @@ describe('getTestRunsResults', () => {
             '    at processTicksAndRejections (internal/process/task_queues.js:97:5)',
         ],
         failureDetails: [],
-        fullName: 'foo bar #C123 hello world',
+        fullName: 'foo bar C123 hello world',
         location: null,
         numPassingAsserts: 0,
         status: 'failed',
-        title: '#C123 hello world',
+        title: 'C123 hello world',
       },
     ];
 

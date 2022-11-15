@@ -14,7 +14,7 @@ export default class TestRailReporter implements Reporter {
       user: process.env.TESTRAIL_EMAIL,
       password: process.env.TESTRAIL_PASSWORD,
     });
-
+    console.log('Edit me please');
     debug('onRunComplete results.testResults', results.testResults);
 
     if (
@@ -31,7 +31,7 @@ export default class TestRailReporter implements Reporter {
       .filter(testResult => !testResult.skipped)
       .map(testResult => testResult.testResults)
       .flat()
-      .filter(test => test.title.startsWith('#C'));
+      .filter(test => test.title.startsWith('C'));
     debug('onRunComplete testRuns', testRuns);
 
     const allCaseIds = testRuns.map(({title}) => getCaseIdFromTestTitle(title));
