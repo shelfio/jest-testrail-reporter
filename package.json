@@ -46,7 +46,7 @@
   },
   "prettier": "@shelf/prettier-config",
   "dependencies": {
-    "strip-ansi": "6.0.0",
+    "strip-ansi": "6.0.1",
     "testrail-api": "1.3.6"
   },
   "devDependencies": {
