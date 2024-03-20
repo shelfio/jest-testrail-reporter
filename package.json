@@ -50,8 +50,8 @@
     "testrail-api": "1.3.6"
   },
   "devDependencies": {
-    "@babel/cli": "7.22.5",
-    "@babel/core": "7.22.5",
+    "@babel/cli": "7.24.1",
+    "@babel/core": "7.24.3",
     "@shelf/babel-config": "0.1.4",
     "@shelf/eslint-config": "1.2.0",
     "@shelf/prettier-config": "1.0.0",
